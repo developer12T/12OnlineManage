@@ -3,6 +3,7 @@ import axios from 'axios'
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
+        infor: JSON.parse(localStorage.getItem('infor')),
         user: JSON.parse(localStorage.getItem('user')),
         token: JSON.parse(localStorage.getItem('token')),
         statusToken: [],
@@ -23,14 +24,16 @@ export const useAuthStore = defineStore('auth', {
                 );
                 const result = response.data
                 if (result) {
-                    this.user = user;
-                    this.token = user.token
-                    localStorage.setItem('user', JSON.stringify(user));
-                    localStorage.setItem('token', JSON.stringify(user.token));
+                    this.infor = result,
+                    this.user = result.user
+                    this.token = result.token
+                    localStorage.setItem('infor', JSON.stringify(result));
+                    localStorage.setItem('user', JSON.stringify(result.user));
+                    localStorage.setItem('token', JSON.stringify(result.token));
                 } else {
                     this.logout()
                 }
-                console.log('login', result.data)
+                console.log('login', result)
             } catch (error) {
                 console.error(error)
             }
